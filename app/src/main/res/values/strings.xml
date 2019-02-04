@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Make Plans</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_header">Make Plans</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="login_help_button">Help me login</string>
+    <string name="login_google_button">Login with Google</string>
+    <string name="new_user_button">New user? Create an account</string>
+</resources>

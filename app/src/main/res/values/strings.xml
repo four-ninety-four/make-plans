@@ -8,4 +8,12 @@
     <string name="login_help_button">Help me login</string>
     <string name="login_google_button">Login with Google</string>
     <string name="new_user_button">New user? Create an account</string>
+    <string name="title_activity_create_event">CreateEvent</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="search">Search</string>
+    <string name="friends">Friends</string>
+    <string name="home">Home</string>
+    <string name="plans">Plans</string>
 </resources>

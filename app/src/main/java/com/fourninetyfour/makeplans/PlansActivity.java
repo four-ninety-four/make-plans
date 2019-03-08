@@ -4,55 +4,61 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 
-public class PlansActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class PlansActivity extends Fragment{
 
+    View view;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plans);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_plans, container, false);
 
         //loading the default fragment
-        loadFragment(new PlansFragment());
-
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(this);
+        openFragment(new PlansFragment());
+        return view;
     }
-
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        BottomNavigationView navigation = (BottomNavigationView) view.findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment fragment = null;
 
-        switch (item.getItemId()) {
-            case R.id.navigation_search:
-                fragment = new SearchFragment();
-                break;
+                        switch (item.getItemId()) {
+                            case R.id.navigation_search:
+                                fragment = new SearchFragment();
+                                break;
 
-            case R.id.navigation_plans:
-                fragment = new PlansFragment();
-                break;
+                            case R.id.navigation_plans:
+                                fragment = new PlansFragment();
+                                break;
 
-            case R.id.navigation_friends:
-                fragment = new FriendsFragment();
-                break;
-        }
-
-        return loadFragment(fragment);
+                            case R.id.navigation_friends:
+                                fragment = new FriendsFragment();
+                                break;
+                        }
+                        return openFragment(fragment);
+                    }
+                });
     }
-
-    private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-            return true;
-        }
-        return false;
+    private boolean openFragment(final Fragment fragment)  {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        return true;
     }
 }

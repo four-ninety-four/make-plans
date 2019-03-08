@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,23 +18,26 @@ public class LoginFragment extends Fragment {
 
     View view;
     Button loginButton;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.content_main, container, false);
         setHasOptionsMenu(true);
         loginButton = (Button) view.findViewById(R.id.login_button);
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.MainFragment, new SettingsActivity() );
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                openFragment(new PlansActivity());
             }
         });
         return view;
+    }
+
+    private void openFragment(final Fragment fragment)  {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.MainFragment, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
     }
 }

@@ -8,16 +8,15 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity() {
 
-    val fragmentManager = supportFragmentManager
-    val fragmentTransaction = fragmentManager.beginTransaction()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +25,22 @@ class MainActivity : FragmentActivity() {
             setTheme(R.style.darkTheme)
         else
             setTheme(R.style.AppTheme)
+
+        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menu.clear()
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
         return if (id == R.id.action_settings) {
             val fragment = SettingsActivity()
             fragmentTransaction.add(R.id.MainFragment, fragment as Fragment)

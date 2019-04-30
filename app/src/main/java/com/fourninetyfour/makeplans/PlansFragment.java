@@ -1,8 +1,12 @@
 package com.fourninetyfour.makeplans;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +24,7 @@ public class PlansFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<Plan> plans;
+    private FloatingActionButton createPlan;
 
 
 
@@ -32,6 +37,22 @@ public class PlansFragment extends Fragment {
         PlanAdapter recyclerAdapter = new PlanAdapter(plans, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
+
+        createPlan = (FloatingActionButton) v.findViewById(R.id.planFab);
+        /* Fragment fragment = new AddPlanFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.commit(); */
+        createPlan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Fragment fragment = new AddPlanFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+
         return v;
     }
 
@@ -43,5 +64,6 @@ public class PlansFragment extends Fragment {
         plans = new ArrayList<>();
         plans.add(new Plan(0, 0, "Barbecue", "Billy's Big Barbecue", 0));
         plans.add(new Plan(1, 1, "Birthday", "Barry's Big Birthday", 1));
+
     }
 }

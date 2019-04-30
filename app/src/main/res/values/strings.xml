@@ -16,4 +16,8 @@
     <string name="friends">Friends</string>
     <string name="home">Home</string>
     <string name="plans">Plans</string>
+    <string-array name="event_types">
+        <item>Public</item>
+        <item>Friends Only</item>
+    </string-array>
 </resources>

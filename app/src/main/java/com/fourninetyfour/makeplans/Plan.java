@@ -2,12 +2,12 @@ package com.fourninetyfour.makeplans;
 
 public class Plan {
 
-    private int id, eventType;
+    private int userid, eventType;
     private String title, description, date;
     private int image;
 
-    public Plan(int id, int eventType, String title, String description, int image) {
-        this.id = id;
+    public Plan(int userid, int eventType, String title, String description, int image) {
+        this.userid = userid;
         this.eventType = eventType;
         this.title = title;
         this.description = description;
@@ -16,7 +16,7 @@ public class Plan {
     }
 
     public int getId() {
-        return id;
+        return userid;
     }
 
     public int getEventType() {

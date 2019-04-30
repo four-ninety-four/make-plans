@@ -32,4 +32,32 @@
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">20dp</item>
     </style>
+
+    <style name="createEventIconStyle">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+        <item name="android:layout_marginTop">15.5dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginStart">8.5dp</item>
+        <item name="android:layout_marginEnd">8.5dp</item>
+        <!--<item name="android:layout_margin">8.5dp</item>-->
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+        <style name="createEventSeparator">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">0.5dp</item>
+            <item name="android:background">#ddd</item>
+            <item name="android:layout_marginStart">18dp</item>
+            <item name="android:layout_marginEnd">18dp</item>
+        </style>
+    <style name="createEventItemTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">6.5dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:background">@null</item>
+    </style>
 </resources>

@@ -2,25 +2,24 @@ package com.fourninetyfour.makeplans;
 
 public class Plan {
 
-    private int userid, eventType;
-    private String title, description, date;
-    private int image;
+    private int userid;
+    private String title, description, startDate, endDate, location, image;
+    private boolean hidden;
 
-    public Plan(int userid, int eventType, String title, String description, int image) {
+
+    public Plan(int userid, String title, String description, String startDate, String endDate, String location, String image, boolean hidden) {
         this.userid = userid;
-        this.eventType = eventType;
         this.title = title;
         this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.location = location;
         this.image = image;
-        this.date = date;
+        this.hidden = hidden;
     }
 
-    public int getId() {
+    public int getUserid() {
         return userid;
-    }
-
-    public int getEventType() {
-        return eventType;
     }
 
     public String getTitle() {
@@ -31,11 +30,23 @@ public class Plan {
         return description;
     }
 
-    public int getImage() {
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getImage() {
         return image;
     }
 
-    public String getDate() {
-        return date;
+    public boolean isHidden() {
+        return hidden;
     }
 }

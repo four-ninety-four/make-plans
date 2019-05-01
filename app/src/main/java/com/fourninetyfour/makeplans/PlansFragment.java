@@ -62,8 +62,9 @@ public class PlansFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         plans = new ArrayList<>();
-        plans.add(new Plan(0, 0, "Barbecue", "Billy's Big Barbecue", 0));
-        plans.add(new Plan(1, 1, "Birthday", "Barry's Big Birthday", 1));
+        plans.add(new Plan(0, "John's Birthday", "John's 13th Birthday Party", "Wed, May 1 2019, 08:00 AM", "Wed, May 1 2019, 12:00 PM",
+                "John's House", "birthday", false));
+
 
     }
 }

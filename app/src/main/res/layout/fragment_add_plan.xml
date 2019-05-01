@@ -94,7 +94,7 @@
 
 
                         <EditText
-                            android:id="@+id/description"
+                            android:id="@+id/event_description"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:hint="Description"
@@ -333,25 +333,17 @@
 
                 <ImageView
                         android:id="@+id/selected_picture"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_weight="2"
-                        android:layout_height="200dp"
+                        android:layout_height="150dp"
                         android:src="@drawable/ic_insert_photo_black_24dp"
 
                         android:paddingStart="6dp"
                         android:paddingEnd="6dp"
+                        android:paddingRight="40dp"
                 />
 
-                <Button
-                        android:id="@+id/select_photo"
-                        android:text="Select Photo"
-                        android:background="@color/colorPrimary"
-                        android:textColor="#FFFFFF"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="40dp"
-                        android:layout_gravity="bottom"
-                       />
+
             </LinearLayout>
             </LinearLayout>
 
@@ -366,26 +358,30 @@
 
                     <Button
                             android:id="@+id/Cancel"
-                            android:background="@color/colorPrimary"
+                            style="@style/Widget.AppCompat.Button"
                             android:text="Cancel"
-                            android:textColor="#FFFFFF"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="60dp"
-                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginRight="15dp"
                     />
 
                     <Button
                             android:id="@+id/Save"
-                            android:background="@color/colorPrimary"
                             android:text="Save"
-                            android:textColor="#FFFFFF"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="60dp"
-                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="30dp"
+
+                            style="@style/Widget.AppCompat.Button"
                     />
                 </LinearLayout>
+
+
+
 
 
 

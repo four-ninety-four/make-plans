@@ -49,12 +49,17 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
         Plan plan = plans.get(i);
         viewHolder.title.setText(plan.getTitle());
         viewHolder.shortDescription.setText(plan.getDescription());
-        viewHolder.date.setText(plan.getDate());
+        viewHolder.date.setText(plan.getStartDate() + " - \n" + plan.getEndDate());
+        viewHolder.creatorType.setText(plan.getUserid() + " - ");
+        if (plan.isHidden() == true)
+            viewHolder.creatorType.append("Friends Only");
+        else
+            viewHolder.creatorType.append("Public");
         switch(plan.getImage()) {
-            case 0:
+            case "barbecue":
                 viewHolder.photo.setImageResource(R.drawable.barbecue);
                 break;
-            case 1:
+            case "birthday":
                 viewHolder.photo.setImageResource(R.drawable.birthday);
                 break;
         }

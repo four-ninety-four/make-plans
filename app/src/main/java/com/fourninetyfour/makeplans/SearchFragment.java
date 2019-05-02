@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
@@ -36,12 +35,12 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
-        recyclerView = (RecyclerView) view.findViewById(R.id.searchRecyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.searchFriendRecyclerView);
         recyclerAdapter = new SearchAdapter(allPlans, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
 
-        searchButton = (Button) view.findViewById(R.id.searchButton);
+        searchButton = (Button) view.findViewById(R.id.searchFriendButton);
         searchTerms = (EditText) view.findViewById(R.id.searchEditText);
         setHasOptionsMenu(true);
 

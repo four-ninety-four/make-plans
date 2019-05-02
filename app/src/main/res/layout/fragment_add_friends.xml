@@ -1,46 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
     <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
-        <TextView
-                android:text="Search by Email"
-                android:layout_width="match_parent"
-                android:layout_height="49dp" android:id="@+id/textView2" android:textSize="24sp"/>
-        <EditText
-                android:id="@+id/friend_email"
+            android:layout_height="match_parent"
+            android:weightSum="10"
+            android:orientation="vertical">
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="@string/login_email_hint"
-                android:ems="10"
-                />
-        <Button
-                android:text="Add Friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/button2"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="202dp" android:translationY="170dp">
-        <TextView
-                android:text="Search by Last Name"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_weight="1"
+                android:paddingHorizontal="10dp">
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Search Term"
+                    android:layout_weight="2"
+                    android:paddingTop="10dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/searchFriendEditText"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:id="@+id/searchFriendButton"/>
+
+        </LinearLayout>
+
+        <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textView3" android:textSize="24sp"/>
-        <EditText
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="@string/last_name"
-                android:ems="10"
-                android:id="@+id/editText2"/>
-        <Button
-                android:text="Add Friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/button3"/>
+                android:layout_weight="9"
+                android:paddingHorizontal="10dp">
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/searchFriendRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"/>
+
+        </LinearLayout>
+
     </LinearLayout>
+
 </FrameLayout>

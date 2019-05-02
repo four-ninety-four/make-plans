@@ -64,7 +64,7 @@ public class FriendsFragment extends Fragment {
             public void onClick (View v){
                 Fragment fragment = new AddFriendFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.rellay1, fragment);
+                ft.replace(R.id.fragment_container, fragment);
                 ft.addToBackStack(null);
                 ft.commit();
             }

@@ -35,12 +35,12 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
-        recyclerView = (RecyclerView) view.findViewById(R.id.searchFriendRecyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.searchRecyclerView);
         recyclerAdapter = new SearchAdapter(allPlans, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
 
-        searchButton = (Button) view.findViewById(R.id.searchFriendButton);
+        searchButton = (Button) view.findViewById(R.id.searchButton);
         searchTerms = (EditText) view.findViewById(R.id.searchEditText);
         setHasOptionsMenu(true);
 

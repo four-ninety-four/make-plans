@@ -32,7 +32,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView title, date, shortDescription, creatorType;
+        public TextView title, date, shortDescription, creatorType, location;
         public ImageView photo;
         public ImageButton delete;
 
@@ -45,6 +45,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
             creatorType = (TextView) itemView.findViewById(R.id.textViewCreator_Type);
             photo = (ImageView) itemView.findViewById(R.id.imageView);
             delete = (ImageButton) itemView.findViewById(R.id.deleteBtn);
+            location = (TextView) itemView.findViewById(R.id.textViewLocation);
         }
     }
     @NonNull
@@ -63,6 +64,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
         viewHolder.shortDescription.setText(plan.getDescription());
         viewHolder.date.setText(fixDate(plan.getStart()) + " - \n" + fixDate(plan.getEnd()));
         viewHolder.creatorType.setText(plan.getUserName() + " - ");
+        viewHolder.location.setText(plan.getLocation());
         if (plan.getIsHidden().equals("1"))
             viewHolder.creatorType.append("Friends Only");
         else

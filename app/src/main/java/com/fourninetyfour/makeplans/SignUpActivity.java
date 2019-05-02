@@ -79,6 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     String uid = auth.getCurrentUser().getUid();
                     Map<String, String> usersMap = new HashMap<>();
+                    usersMap.put("userID", uid);
                     usersMap.put("email", email.toString());
                     usersMap.put("first", firstName.getText().toString());
                     usersMap.put("last", lastName.getText().toString());
@@ -93,14 +94,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void openFragment(final Fragment fragment)  {
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.MainFragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     private boolean validateForm() {

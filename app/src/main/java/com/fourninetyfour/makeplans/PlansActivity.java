@@ -8,10 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.widget.Toolbar;
+import android.view.*;
 
 
 public class PlansActivity extends Fragment{
@@ -25,6 +23,9 @@ public class PlansActivity extends Fragment{
         navigation.getMenu().getItem(1).setChecked(true);
         //loading the default fragment
         openFragment(new PlansFragment());
+
+
+
         return view;
     }
 
@@ -62,4 +63,37 @@ public class PlansActivity extends Fragment{
         transaction.commit();
         return true;
     }
+
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+        // Do something that differs the Activity's menu here
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        MenuInflater mi = new MenuInflater(getContext());
+        mi.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Fragment fragment = new SettingsActivity();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+                return true;
+            default:
+                break;
+        }
+
+        return false;
+    }
+
+
 }

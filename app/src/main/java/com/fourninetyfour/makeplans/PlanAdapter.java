@@ -101,7 +101,6 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 viewHolder.photo.setImageBitmap(Bitmap.createScaledBitmap(bmp, viewHolder.photo.getWidth(),
                         viewHolder.photo.getHeight(), false));
-                notifyDataSetChanged();
             }
         });
 

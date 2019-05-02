@@ -110,7 +110,7 @@ public class AddPlanFragment extends Fragment {
                 savedLocation = location.getText().toString();
                 planMap.put("location", savedLocation);
 
-                if (eventType.getSelectedItem().toString() == "Public") {
+                if (eventType.getSelectedItem().toString().equals("Public")) {
                     savedEventType = false;
                     planMap.put("isHidden", "0");
                 }

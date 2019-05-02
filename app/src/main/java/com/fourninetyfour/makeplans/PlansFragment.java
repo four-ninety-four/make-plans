@@ -56,7 +56,7 @@ public class PlansFragment extends Fragment {
                 }
                 if (!documentSnapshots.isEmpty()) {
                     for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                        if (doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.REMOVED) {
                             plans.add(doc.getDocument().toObject(Plan.class));
                             recyclerAdapter.notifyDataSetChanged();
                         }

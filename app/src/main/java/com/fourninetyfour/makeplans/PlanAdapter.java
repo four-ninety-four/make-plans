@@ -51,7 +51,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
         viewHolder.shortDescription.setText(plan.getDescription());
         viewHolder.date.setText(fixDate(plan.getStart()) + " - \n" + fixDate(plan.getEnd()));
         viewHolder.creatorType.setText(plan.getUserID() + " - ");
-        if (plan.isHidden() == "1")
+        if (plan.getIsHidden().equals("1"))
             viewHolder.creatorType.append("Friends Only");
         else
             viewHolder.creatorType.append("Public");

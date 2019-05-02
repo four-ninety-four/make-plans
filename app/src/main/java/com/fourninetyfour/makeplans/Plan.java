@@ -76,11 +76,7 @@ public class Plan {
         this.image = image;
     }
 
-    public String isHidden() {
-        return isHidden;
-    }
+    public String getIsHidden() { return isHidden; }
 
-    public void setHidden(String hidden) {
-        isHidden = hidden;
-    }
+    public void setIsHidden(String hidden) { isHidden = hidden; }
 }

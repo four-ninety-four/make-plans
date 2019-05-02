@@ -1,12 +1,8 @@
 package com.fourninetyfour.makeplans;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
@@ -30,7 +27,7 @@ public class SearchFragment extends Fragment {
     private List<Plan> plans;
     private Button searchButton;
     private EditText searchTerms;
-    PlanAdapter recyclerAdapter;
+    SearchAdapter recyclerAdapter;
     CollectionReference plansRef;
 
 
@@ -39,9 +36,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
-
         recyclerView = (RecyclerView) view.findViewById(R.id.searchRecyclerView);
-        recyclerAdapter = new PlanAdapter(allPlans, getContext());
+        recyclerAdapter = new SearchAdapter(allPlans, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -49,12 +45,13 @@ public class SearchFragment extends Fragment {
         searchTerms = (EditText) view.findViewById(R.id.searchEditText);
         setHasOptionsMenu(true);
 
+
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         plansRef = database.collection("plans");
 
-        plansRef.whereEqualTo("userID", uid).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        plansRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
@@ -77,7 +74,7 @@ public class SearchFragment extends Fragment {
                 // TODO Auto-generated method stub
                 if(!(searchTerms.getText().toString().equals(""))){
                     plans = new ArrayList<>();
-                    recyclerAdapter = new PlanAdapter(plans, getContext());
+                    recyclerAdapter = new SearchAdapter(plans, getContext());
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(recyclerAdapter);
                     for (Plan plan: allPlans){
@@ -88,7 +85,7 @@ public class SearchFragment extends Fragment {
                     }
                 }
                 else {
-                    recyclerAdapter = new PlanAdapter(allPlans, getContext());
+                    recyclerAdapter = new SearchAdapter(allPlans, getContext());
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(recyclerAdapter);
                 }
@@ -105,5 +102,10 @@ public class SearchFragment extends Fragment {
         allPlans = new ArrayList<>();
 
 
+
+    }
+
+    public void onStart() {
+        super.onStart();
     }
 }

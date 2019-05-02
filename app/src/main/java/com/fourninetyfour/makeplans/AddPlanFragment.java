@@ -3,6 +3,7 @@ package com.fourninetyfour.makeplans;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -11,16 +12,22 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.*;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -40,6 +47,8 @@ public class AddPlanFragment extends Fragment {
     private static int LOAD_IMAGE_RESULTS = 100;
     Uri imageURI;
     String savedImageURI;
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -88,6 +97,11 @@ public class AddPlanFragment extends Fragment {
             }
         });
 
+        mStorageRef = FirebaseStorage.getInstance().getReference("images");
+
+
+
+
 
         /* Upload to database and create event */
 
@@ -123,6 +137,7 @@ public class AddPlanFragment extends Fragment {
 
                 savedImageURI = imageURI.toString();
                 planMap.put("image", savedImageURI);
+                uploadFile();
 
                 if (savedImageURI == null || savedStartDateTime == "" || savedEndDateTime == "" ||
                 savedTitle == "" || savedDescription == "" || savedLocation == "") {
@@ -134,6 +149,12 @@ public class AddPlanFragment extends Fragment {
                     planMap.put("documentID", docRef.getId());
                     docRef.set(planMap);
                     Toast.makeText(getActivity(), "Plan added!", Toast.LENGTH_SHORT).show();
+                    Fragment fragment = new PlansFragment();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
 
 
@@ -221,6 +242,21 @@ public class AddPlanFragment extends Fragment {
         endTime.setText(dateFormat.format(endDate.getTime()));
 
     }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cr = getContext().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+   private void uploadFile() {
+       if (savedImageURI != null) {
+           StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() +
+                   "." + getFileExtension(imageURI));
+
+           fileReference.putFile(imageURI);
+       }
+   }
 
 
 

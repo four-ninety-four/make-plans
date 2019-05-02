@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.firebase.database.*;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -21,6 +22,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     private Context context;
     FirebaseFirestore database = FirebaseFirestore.getInstance();
     CollectionReference userRef = database.collection("plans");
+    DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("plans");
 
 
     public PlanAdapter(List<Plan> plans, Context context) {
@@ -42,7 +44,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
             shortDescription = (TextView) itemView.findViewById(R.id.textViewShortDesc);
             creatorType = (TextView) itemView.findViewById(R.id.textViewCreator_Type);
             photo = (ImageView) itemView.findViewById(R.id.imageView);
-            delete = (ImageButton) itemView.findViewById(R.id.delete);
+            delete = (ImageButton) itemView.findViewById(R.id.deleteBtn);
         }
     }
     @NonNull
@@ -65,6 +67,22 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
             viewHolder.creatorType.append("Friends Only");
         else
             viewHolder.creatorType.append("Public");
+
+        /* mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        }) */
+
+
         switch(plan.getImage()) {
             case "barbecue":
                 viewHolder.photo.setImageResource(R.drawable.barbecue);

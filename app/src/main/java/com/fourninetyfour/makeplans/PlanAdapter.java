@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
 
     List<Plan> plans;
     private Context context;
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
+    CollectionReference userRef = database.collection("plans");
+
 
     public PlanAdapter(List<Plan> plans, Context context) {
         this.plans = plans;
@@ -47,6 +52,8 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PlanAdapter.ViewHolder viewHolder, int i) {
         Plan plan = plans.get(i);
+        //String uid = plan.getUserID();
+        //plansRef.whereEqualTo("userID", uid).getE
         viewHolder.title.setText(plan.getTitle());
         viewHolder.shortDescription.setText(plan.getDescription());
         viewHolder.date.setText(fixDate(plan.getStart()) + " - \n" + fixDate(plan.getEnd()));

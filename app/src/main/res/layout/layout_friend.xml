@@ -31,12 +31,20 @@
                     android:layout_marginStart="5dp" android:layout_below="@id/friendNameView"
                     android:layout_toRightOf="@id/friendImageView"/>
             <Button
-                    android:text="Delete"
+                    android:text="Add Friend"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/button"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addFriendButton"
                     android:layout_toRightOf="@id/friendImageView" android:layout_below="@id/friendEmailView"
                     android:layout_toEndOf="@id/friendEmailView" android:layout_marginLeft="187dp"
                     android:layout_marginTop="54dp" android:layout_marginStart="147dp"/>
+            <Button
+                    android:text="Delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/deleteButton"
+                    android:layout_toRightOf="@id/friendImageView" android:layout_below="@id/friendEmailView"
+                    android:layout_toEndOf="@id/friendEmailView" android:layout_marginLeft="190dp"
+                    android:layout_marginTop="57dp" android:layout_marginStart="150dp"/>
             <TextView
                     android:text="@string/city"
                     android:layout_width="wrap_content"

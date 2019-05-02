@@ -6,4 +6,16 @@
         <attr name="tintcolor" format="color"/>
         <attr name="buttoncolor" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name = "cardStyle">
+        <attr name="cardStyle" format="reference" />
+    </declare-styleable>
+
+    <style name="Light" parent="AppTheme">
+        <item name="cardStyle">@style/CardView.Light</item>
+    </style>
+
+    <style name="Dark" parent="darkTheme">
+        <item name="cardStyle">@style/CardView.Dark</item>
+    </style>
 </resources>

@@ -1,6 +1,8 @@
 package com.fourninetyfour.makeplans;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -23,6 +28,8 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     FirebaseFirestore database = FirebaseFirestore.getInstance();
     CollectionReference userRef = database.collection("plans");
     DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("plans");
+    StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("images");
+    final FirebaseStorage storage = FirebaseStorage.getInstance();
 
 
     public PlanAdapter(List<Plan> plans, Context context) {
@@ -34,7 +41,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
 
         public TextView title, date, shortDescription, creatorType, location;
         public ImageView photo;
-        public ImageButton delete;
+        public ImageButton delete, share;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -45,6 +52,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
             creatorType = (TextView) itemView.findViewById(R.id.textViewCreator_Type);
             photo = (ImageView) itemView.findViewById(R.id.imageView);
             delete = (ImageButton) itemView.findViewById(R.id.deleteBtn);
+            share = (ImageButton) itemView.findViewById(R.id.shareBtn);
             location = (TextView) itemView.findViewById(R.id.textViewLocation);
         }
     }
@@ -84,15 +92,19 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
             }
         }) */
 
+        final long ONE_MEGABYTE = 1024 * 1024;
+        System.out.println(plan.getImage());
+        mStorageRef = storage.getReference().child("images/" + plan.getImage());
+        mStorageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                viewHolder.photo.setImageBitmap(Bitmap.createScaledBitmap(bmp, viewHolder.photo.getWidth(),
+                        viewHolder.photo.getHeight(), false));
+                notifyDataSetChanged();
+            }
+        });
 
-        switch(plan.getImage()) {
-            case "barbecue":
-                viewHolder.photo.setImageResource(R.drawable.barbecue);
-                break;
-            case "birthday":
-                viewHolder.photo.setImageResource(R.drawable.birthday);
-                break;
-        }
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +112,13 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
                 database.collection("plans").document(removedPlan.getDocumentID()).delete();
                 plans.remove(i);
                 notifyItemRemoved(i);
+            }
+        });
+        viewHolder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Plan currentPlan = plans.get(i);
+                database.collection("plans");
             }
         });
     }

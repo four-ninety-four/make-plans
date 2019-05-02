@@ -147,8 +147,9 @@ public class AddPlanFragment extends Fragment {
 
 
                 savedImageURI = imageURI.toString();
-                planMap.put("image", savedImageURI);
-                uploadFile();
+                String timeStamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(Calendar.getInstance().getTime());
+                planMap.put("image", timeStamp + "." + getFileExtension(imageURI));
+                uploadFile(timeStamp);
 
                 if (savedImageURI == null || savedStartDateTime.isEmpty() || savedEndDateTime.isEmpty() ||
                 savedTitle.isEmpty() || savedDescription.isEmpty() || savedLocation.isEmpty()) {
@@ -256,9 +257,9 @@ public class AddPlanFragment extends Fragment {
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 
-   private void uploadFile() {
+   private void uploadFile(String timeStamp) {
        if (savedImageURI != null) {
-           StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() +
+           StorageReference fileReference = mStorageRef.child(timeStamp +
                    "." + getFileExtension(imageURI));
 
            fileReference.putFile(imageURI);

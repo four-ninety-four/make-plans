@@ -1,5 +1,7 @@
 package com.fourninetyfour.makeplans;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +50,8 @@ public class FriendsFragment extends Fragment {
         addFriends = v.findViewById(R.id.profile_add_friends);
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DocumentReference userRef = database.collection("users").document(uid);
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -57,6 +65,24 @@ public class FriendsFragment extends Fragment {
                 profileLocation.setText(user.getCity() + ", " + user.getState());
                 profilePhone.setText(user.getPhone());
                 profileEmail.setText(user.getEmail());
+
+                StorageReference storageReference;
+                if (!user.getImage().equals("blank_profile.png")) {
+                    storageReference = storage.getReference().child("images/users/" + uid + "/" + user.getImage());
+                }
+                else {
+                    storageReference = storage.getReference().child("images/users/blank_profile.png");
+                }
+
+                final long ONE_MEGABYTE = 1024 * 1024;
+                storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        profilePhoto.setImageBitmap(Bitmap.createScaledBitmap(bmp, profilePhoto.getWidth(),
+                                profilePhoto.getHeight(), false));
+                    }
+                });
             }
         });
 
@@ -78,8 +104,8 @@ public class FriendsFragment extends Fragment {
                 ft.replace(R.id.fragment_container, fragment);
                 ft.addToBackStack(null);
                 ft.commit();
-            }
-        });
+             }
+       });
 
         return v;
     }

@@ -8,7 +8,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:weightSum="5"
         android:orientation="vertical"
-        tools:showIn="@layout/activity_main"
         tools:context=".MainActivity">
 
     <LinearLayout
@@ -46,6 +45,61 @@
                 android:layout_marginHorizontal="48dp"
                 android:id="@+id/login_password"
                 android:hint="@string/login_password_hint"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="48dp"
+                android:id="@+id/first_name"
+                android:hint="@string/first_name"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="48dp"
+                android:id="@+id/last_name"
+                android:hint="@string/last_name"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="48dp"
+                android:weightSum="2">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/city"
+                android:layout_weight="1"
+                android:hint="@string/city"/>
+            <EditText
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/state"
+                android:layout_weight="1"
+                android:hint="@string/state"/>
+
+        </LinearLayout>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="48dp"
+                android:id="@+id/phone"
+                android:hint="@string/phone_number"/>
+
         <Button
                 android:text="@string/sign_up"
                 android:layout_width="match_parent"

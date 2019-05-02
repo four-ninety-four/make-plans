@@ -12,14 +12,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseAuth auth;
+    FirebaseFirestore database;
+
     EditText email, password;
+    EditText firstName, lastName;
+    EditText city, state;
+    EditText phone;
     Button signUp;
     Button loginButton;
 
@@ -28,8 +39,15 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        auth = FirebaseAuth.getInstance();
+
         email = findViewById(R.id.login_email);
         password = findViewById(R.id.login_password);
+        firstName = findViewById(R.id.first_name);
+        lastName = findViewById(R.id.last_name);
+        city = findViewById(R.id.city);
+        state = findViewById(R.id.state);
+        phone = findViewById(R.id.phone);
         signUp = findViewById(R.id.signup_button);
         loginButton = findViewById(R.id.login_button);
 
@@ -51,12 +69,27 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void signUp(String email, String password) {
+    public void signUp(final String email, String password) {
+        final Intent intent = new Intent(this, MainActivity.class);
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    openFragment(new PlansActivity());
+                    database = FirebaseFirestore.getInstance();
+
+                    String uid = auth.getCurrentUser().getUid();
+                    Map<String, String> usersMap = new HashMap<>();
+                    usersMap.put("email", email.toString());
+                    usersMap.put("first", firstName.getText().toString());
+                    usersMap.put("last", lastName.getText().toString());
+                    usersMap.put("image", "image.jpg");
+                    usersMap.put("city", city.getText().toString());
+                    usersMap.put("state", state.getText().toString());
+                    usersMap.put("phone", phone.getText().toString());
+
+                    database.collection("users").document(uid).set(usersMap);
+
+                    startActivity(intent);
                 }
             }
         });
@@ -85,6 +118,41 @@ public class SignUpActivity extends AppCompatActivity {
             valid = false;
         } else {
             password.setError(null);
+        }
+
+        if (TextUtils.isEmpty(firstName.getText().toString())) {
+            firstName.setError("Required.");
+            valid = false;
+        } else {
+            firstName.setError(null);
+        }
+
+        if (TextUtils.isEmpty(lastName.getText().toString())) {
+            lastName.setError("Required.");
+            valid = false;
+        } else {
+            lastName.setError(null);
+        }
+
+        if (TextUtils.isEmpty(city.getText().toString())) {
+            city.setError("Required.");
+            valid = false;
+        } else {
+            city.setError(null);
+        }
+
+        if (TextUtils.isEmpty(state.getText().toString())) {
+            state.setError("Required.");
+            valid = false;
+        } else {
+            state.setError(null);
+        }
+
+        if (TextUtils.isEmpty(phone.getText().toString())) {
+            phone.setError("Required.");
+            valid = false;
+        } else {
+            phone.setError(null);
         }
 
         return valid;

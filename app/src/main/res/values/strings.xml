@@ -18,6 +18,11 @@
     <string name="plans">Plans</string>
     <string name="sign_up">Sign up</string>
     <string name="back_to_login">Already have an account? Log in</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="phone_number">Phone number</string>
     <string-array name="event_types">
         <item>Public</item>
         <item>Friends Only</item>

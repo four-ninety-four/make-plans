@@ -1,6 +1,7 @@
 package com.fourninetyfour.makeplans;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 
@@ -49,20 +51,13 @@ public class AddFriendFragment extends Fragment {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         plansRef = database.collection("users");
-
-        plansRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        plansRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-
-                if (e != null) {
-                    // handle error
-                }
-                if (!documentSnapshots.isEmpty()) {
-                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED || doc.getType() == DocumentChange.Type.REMOVED) {
-                            allFriends.add(doc.getDocument().toObject(Friend.class));
-                            recyclerAdapter.notifyDataSetChanged();
-                        }
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        allFriends.add(document.toObject(Friend.class));
+                        recyclerAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -77,7 +72,7 @@ public class AddFriendFragment extends Fragment {
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     recyclerView.setAdapter(recyclerAdapter);
                     for (Friend friend: allFriends){
-                        if(friend.getFriendFirstName().toLowerCase().contains(searchTerms.getText().toString().toLowerCase())){
+                        if(friend.getFirst().toLowerCase().contains(searchTerms.getText().toString().toLowerCase())){
                             friends.add(friend);
                             recyclerAdapter.notifyDataSetChanged();
                         }

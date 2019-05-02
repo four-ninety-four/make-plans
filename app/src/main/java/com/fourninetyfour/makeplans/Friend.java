@@ -2,71 +2,71 @@ package com.fourninetyfour.makeplans;
 
 class Friend {
 
-    private String friendFirstName;
-    private String friendLastName;
-    private String friendEmail;
-    private String friendCity;
-    private String friendState;
-    private String friendImage;
+    private String first;
+    private String last;
+    private String email;
+    private String city;
+    private String state;
+    private String image;
 
     public Friend() {
     }
 
-    public Friend(String friendFirstName, String friendLastName, String friendEmail, String friendCity, String friendState, String friendImage) {
-        this.friendFirstName = friendFirstName;
-        this.friendLastName = friendLastName;
-        this.friendEmail = friendEmail;
-        this.friendCity = friendCity;
-        this.friendState = friendState;
-        this.friendImage = friendImage;
+    public Friend(String First, String friendLastName, String friendEmail, String friendCity, String friendState, String friendImage) {
+        this.first = First;
+        this.last = friendLastName;
+        this.email = friendEmail;
+        this.city = friendCity;
+        this.state = friendState;
+        this.image = friendImage;
     }
 
-    public String getFriendFirstName() {
-        return friendFirstName;
+    public String getFirst() {
+        return first;
     }
 
-    public void setFriendFirstName(String friendFirstName) {
-        this.friendFirstName = friendFirstName;
+    public void setFirst(String first) {
+        this.first = first;
     }
 
-    public String getFriendLastName() {
-        return friendLastName;
+    public String getLast() {
+        return last;
     }
 
-    public void setFriendLastName(String friendLastName) {
-        this.friendLastName = friendLastName;
+    public void setLast(String last) {
+        this.last = last;
     }
 
-    public String getFriendEmail() {
-        return friendEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setFriendEmail(String friendEmail) {
-        this.friendEmail = friendEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getfriendCity() {
-        return friendCity;
+    public String getCity() {
+        return city;
     }
 
-    public void setFriendCity(String friendCity) {
-        this.friendCity = friendCity;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getFriendState() {
-        return friendState;
+    public String getState() {
+        return state;
     }
 
-    public void setFriendState(String friendState) {
-        this.friendState = friendState;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getFriendImage() {
-        return friendImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setFriendImage(String friendImage) {
-        this.friendImage = friendImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 

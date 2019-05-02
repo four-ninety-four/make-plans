@@ -1,6 +1,8 @@
 package com.fourninetyfour.makeplans;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,8 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -36,8 +42,22 @@ public class FriendsFragment extends Fragment {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        CollectionReference userRef = database.collection("users");
-        //userRef.whereEqualTo("userID", uid).get()
+        DocumentReference userRef = database.collection("users").document(uid);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    profileName.setText(document.get("first").toString() + " " + document.get("last").toString());
+                    profileTopLocation.setText(document.get("state").toString() + ", USA");
+                    profileLocation.setText(document.get("city").toString() + ", " + document.get("state").toString());
+                    profileEmail.setText(document.get("email").toString());
+                    profilePhone.setText(document.get("phone").toString());
+                    //profilePhoto.setImageDrawable((Drawable) document.get("image"));
+                }
+            }
+        });
+
         return v;
     }
 }

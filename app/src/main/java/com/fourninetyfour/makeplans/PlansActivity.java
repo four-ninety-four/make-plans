@@ -21,7 +21,8 @@ public class PlansActivity extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_plans, container, false);
-
+        BottomNavigationView navigation = (BottomNavigationView) view.findViewById(R.id.navigation);
+        navigation.getMenu().getItem(1).setChecked(true);
         //loading the default fragment
         openFragment(new PlansFragment());
         return view;

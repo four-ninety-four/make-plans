@@ -9,9 +9,12 @@
         <item name="textcolor">#808080</item>
         <item name="tintcolor">#000000</item>
         <item name="buttoncolor">#2196F3</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="cardStyle">@style/CardView.Light</item>
     </style>
 
-    <style name="darkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="darkTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">#212121</item>
         <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">#D81B60</item>
@@ -19,6 +22,9 @@
         <item name="textcolor">#ffffff</item>
         <item name="tintcolor">#ffffff</item>
         <item name="buttoncolor">#2196F3</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="cardStyle">@style/CardView.Dark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

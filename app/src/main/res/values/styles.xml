@@ -20,7 +20,7 @@
         <item name="colorAccent">#D81B60</item>
         <item name="backgroundcolor">#303030</item>
         <item name="textcolor">#ffffff</item>
-        <item name="tintcolor">#ffffff</item>
+        <item name="tintcolor">#404040</item>
         <item name="buttoncolor">#2196F3</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

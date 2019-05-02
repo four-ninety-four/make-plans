@@ -39,7 +39,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         public class ViewHolder extends RecyclerView.ViewHolder{
 
-            public TextView title, date, shortDescription, creatorType;
+            public TextView title, date, shortDescription, creatorType, location;
             public ImageView photo;
             public ImageButton delete;
 
@@ -54,6 +54,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 delete = (ImageButton) itemView.findViewById(R.id.deleteBtn);
                 delete.setClickable(false);
                 delete.setVisibility(View.GONE);
+                location = (TextView) itemView.findViewById(R.id.textViewLocation);
             }
         }
         @NonNull
@@ -76,6 +77,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 viewHolder.creatorType.append("Friends Only");
             else
                 viewHolder.creatorType.append("Public");
+            viewHolder.location.setText(plan.getLocation());
             final long ONE_MEGABYTE = 1024 * 1024;
             System.out.println(plan.getImage());
             mStorageRef = storage.getReference().child("images/" + plan.getImage());

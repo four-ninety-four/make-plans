@@ -130,12 +130,10 @@ public class AddPlanFragment extends Fragment {
                     toast.show();
                 }
                 else {
-                    database.collection("plans").add(planMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getActivity(), "Plan added!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    DocumentReference docRef = database.collection("plans").document();
+                    planMap.put("documentID", docRef.getId());
+                    docRef.set(planMap);
+                    Toast.makeText(getActivity(), "Plan added!", Toast.LENGTH_SHORT).show();
                 }
 
 

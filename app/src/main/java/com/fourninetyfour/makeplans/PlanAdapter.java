@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,6 +32,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
 
         public TextView title, date, shortDescription, creatorType;
         public ImageView photo;
+        public ImageButton delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -40,6 +42,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
             shortDescription = (TextView) itemView.findViewById(R.id.textViewShortDesc);
             creatorType = (TextView) itemView.findViewById(R.id.textViewCreator_Type);
             photo = (ImageView) itemView.findViewById(R.id.imageView);
+            delete = (ImageButton) itemView.findViewById(R.id.delete);
         }
     }
     @NonNull
@@ -50,7 +53,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlanAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull PlanAdapter.ViewHolder viewHolder, final int i) {
         Plan plan = plans.get(i);
         //String uid = plan.getUserID();
         //plansRef.whereEqualTo("userID", uid).getE
@@ -70,6 +73,15 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
                 viewHolder.photo.setImageResource(R.drawable.birthday);
                 break;
         }
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Plan removedPlan = plans.get(i);
+                database.collection("plans").document(removedPlan.getDocumentID()).delete();
+                plans.remove(i);
+                notifyItemRemoved(i);
+            }
+        });
     }
 
     @Override

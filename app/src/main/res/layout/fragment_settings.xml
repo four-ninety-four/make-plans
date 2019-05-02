@@ -4,7 +4,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="10">
 
     <Switch
             android:text="Dark Mode"
@@ -16,6 +17,16 @@
             android:padding="32dp"
             android:textSize="30dp"
             android:textStyle="bold"
-            app:switchTextAppearance="@style/SwitchStyle"/>
+            app:switchTextAppearance="@style/SwitchStyle"
+            android:layout_weight="1"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text=""
+            android:id="@+id/dumb"/>
+
+
 
 </LinearLayout>

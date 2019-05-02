@@ -49,9 +49,9 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
         Plan plan = plans.get(i);
         viewHolder.title.setText(plan.getTitle());
         viewHolder.shortDescription.setText(plan.getDescription());
-        viewHolder.date.setText(plan.getStartDate() + " - \n" + plan.getEndDate());
-        viewHolder.creatorType.setText(plan.getUserid() + " - ");
-        if (plan.isHidden() == true)
+        viewHolder.date.setText(fixDate(plan.getStart()) + " - \n" + fixDate(plan.getEnd()));
+        viewHolder.creatorType.setText(plan.getUserID() + " - ");
+        if (plan.isHidden() == "1")
             viewHolder.creatorType.append("Friends Only");
         else
             viewHolder.creatorType.append("Public");
@@ -68,5 +68,42 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return plans.size();
+    }
+
+    private String fixDate(String date) {
+        String month = date.substring(0,2);
+        String day = date.substring(3,5);
+        String year = date.substring(6,10);
+        String time = date.substring(11);
+        String monthTerm = "";
+
+        switch (month) {
+            case "01": monthTerm = "January";
+                break;
+            case "02": monthTerm = "February";
+                break;
+            case "03": monthTerm = "March";
+                break;
+            case "04": monthTerm = "April";
+                break;
+            case "05": monthTerm = "May";
+                break;
+            case "06": monthTerm = "June";
+                break;
+            case "07": monthTerm = "July";
+                break;
+            case "08": monthTerm = "August";
+                break;
+            case "09": monthTerm = "September";
+                break;
+            case "10": monthTerm = "October";
+                break;
+            case "11": monthTerm = "November";
+                break;
+            case "12": monthTerm = "December";
+                break;
+        }
+
+        return monthTerm + " " + day + ", " + year + ", " + time;
     }
 }

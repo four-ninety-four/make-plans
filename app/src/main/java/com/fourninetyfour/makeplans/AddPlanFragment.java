@@ -15,11 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -34,10 +37,14 @@ public class AddPlanFragment extends Fragment {
     private ImageView photoSelect;
     private Button photoBtn, cancel, save;
     private static int LOAD_IMAGE_RESULTS = 100;
-    Uri imageURI, savedImageURI;
+    Uri imageURI;
+    String savedImageURI;
+
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     private final static SimpleDateFormat dateFormat
-            = new SimpleDateFormat("E, MMM dd yyyy, hh:mm", Locale.getDefault());
+            = new SimpleDateFormat("mm-dd-yyyy, hh:mm", Locale.getDefault());
 
 
     @Nullable
@@ -59,7 +66,7 @@ public class AddPlanFragment extends Fragment {
 
             }
         });
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.event_types, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.event_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eventType.setAdapter(adapter);
         photoSelect.setOnClickListener(new View.OnClickListener() {
@@ -85,21 +92,49 @@ public class AddPlanFragment extends Fragment {
 
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Map<String, String> planMap = new HashMap<>();
+                planMap.put("userID", auth.getCurrentUser().getUid());
+
                 savedStartDateTime = startTime.getText().toString();
+                planMap.put("start", savedStartDateTime);
+
                 savedEndDateTime = endTime.getText().toString();
+                planMap.put("end", savedEndDateTime);
+
                 savedTitle = title.getText().toString();
+                planMap.put("title", savedTitle);
+
                 savedDescription = description.getText().toString();
+                planMap.put("description", savedDescription);
+
                 savedLocation = location.getText().toString();
-                if (eventType.getSelectedItem().toString() == "Public")
+                planMap.put("location", savedLocation);
+
+                if (eventType.getSelectedItem().toString() == "Public") {
                     savedEventType = false;
-                else
+                    planMap.put("isHidden", "0");
+                }
+                else {
                     savedEventType = true;
-                savedImageURI = imageURI;
+                    planMap.put("isHidden", "1");
+                }
+
+
+                savedImageURI = imageURI.toString();
+                planMap.put("image", savedImageURI);
 
                 if (savedImageURI == null || savedStartDateTime == "" || savedEndDateTime == "" ||
                 savedTitle == "" || savedDescription == "" || savedLocation == "") {
                     Toast toast = Toast.makeText(getContext(), "Missing field - Event cannot be created. Please make sure all fields are filled out.", Toast.LENGTH_LONG);
                     toast.show();
+                }
+                else {
+                    database.collection("plans").add(planMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getActivity(), "Plan added!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
 
@@ -155,7 +190,7 @@ public class AddPlanFragment extends Fragment {
 
     public void updateTextStart() {
         SimpleDateFormat dateFormat
-                = new SimpleDateFormat("E, MMM dd yyyy, hh:mm a", Locale.getDefault());
+                = new SimpleDateFormat("MM-dd-yyyy, hh:mm a", Locale.getDefault());
         startTime.setText(dateFormat.format(startDate.getTime()));
 
     }
@@ -182,7 +217,7 @@ public class AddPlanFragment extends Fragment {
 
     public void updateTextEnd() {
         SimpleDateFormat dateFormat
-                = new SimpleDateFormat("E, MMM dd yyyy, hh:mm a", Locale.getDefault());
+                = new SimpleDateFormat("MM-dd-yyyy, hh:mm a", Locale.getDefault());
         endTime.setText(dateFormat.format(endDate.getTime()));
 
     }

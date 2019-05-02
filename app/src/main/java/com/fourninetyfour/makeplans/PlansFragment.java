@@ -13,9 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,8 @@ public class PlansFragment extends Fragment {
     View v;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private List<Plan> plans;
+    private List<Plan> plans = new ArrayList<Plan>();
     private FloatingActionButton createPlan;
-
-
 
 
     @Nullable
@@ -38,9 +38,32 @@ public class PlansFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_plans, null);
         recyclerView = (RecyclerView) v.findViewById(R.id.plansRecyclerView);
-        PlanAdapter recyclerAdapter = new PlanAdapter(plans, getContext());
+        final PlanAdapter recyclerAdapter = new PlanAdapter(plans, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        CollectionReference plansRef = database.collection("plans");
+
+        plansRef.whereEqualTo("userID", uid).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    // handle error
+                }
+                if (!documentSnapshots.isEmpty()) {
+                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            plans.add(doc.getDocument().toObject(Plan.class));
+                            recyclerAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+        });
 
         createPlan = (FloatingActionButton) v.findViewById(R.id.planFab);
         /* Fragment fragment = new AddPlanFragment();
@@ -64,18 +87,6 @@ public class PlansFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        //RecyclerView plansList = getActivity().findViewById(R.id.plansRecyclerView);
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        System.out.println(uid);
-
-       // database.collection()
-
-        plans = new ArrayList<>();
-        plans.add(new Plan(0, "John's Birthday", "John's 13th Birthday Party", "Wed, May 1 2019, 08:00 AM", "Wed, May 1 2019, 12:00 PM",
-                "John's House", "birthday", false));
-
 
     }
 }

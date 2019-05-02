@@ -2,51 +2,85 @@ package com.fourninetyfour.makeplans;
 
 public class Plan {
 
-    private int userid;
-    private String title, description, startDate, endDate, location, image;
-    private boolean hidden;
+    private String userID;
+    private String title, description, start, end, location, image;
+    private String isHidden;
 
-
-    public Plan(int userid, String title, String description, String startDate, String endDate, String location, String image, boolean hidden) {
-        this.userid = userid;
-        this.title = title;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.location = location;
-        this.image = image;
-        this.hidden = hidden;
+    public Plan() {
     }
 
-    public int getUserid() {
-        return userid;
+    public Plan(String userid, String title, String description, String start, String end, String location, String image, String isHidden) {
+        this.userID = userid;
+        this.title = title;
+        this.description = description;
+        this.start = start;
+        this.end = end;
+        this.location = location;
+        this.image = image;
+        this.isHidden = isHidden;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public String getLocation() {
         return location;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getImage() {
         return image;
     }
 
-    public boolean isHidden() {
-        return hidden;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(String hidden) {
+        isHidden = hidden;
     }
 }

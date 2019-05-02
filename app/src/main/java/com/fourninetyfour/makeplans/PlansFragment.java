@@ -66,6 +66,7 @@ public class PlansFragment extends Fragment {
         });
 
         createPlan = (FloatingActionButton) v.findViewById(R.id.planFab);
+        setHasOptionsMenu(true);
         /* Fragment fragment = new AddPlanFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, fragment);

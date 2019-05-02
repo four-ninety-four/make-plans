@@ -83,11 +83,23 @@
                     android:textColor="#000000"
                     android:textStyle="bold" />
             <ImageButton
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     app:srcCompat="@android:drawable/ic_menu_delete"
                     android:layout_alignParentRight="true"
-                    android:id="@+id/deleteBtn"/>
+                    android:id="@+id/deleteBtn"
+                    android:background="#00000000"
+            />
+            <ImageButton
+                    android:layout_below="@+id/deleteBtn"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/shareBtn"
+                    android:src="@drawable/ic_baseline_share_24px"
+                    android:contentDescription="Share Button"
+                    android:background="#00000000"
+            />
 
         </RelativeLayout>
 

@@ -3,16 +3,17 @@ package com.fourninetyfour.makeplans;
 public class Plan {
 
     private String documentID;
-    private String userID;
+    private String userID, userName;
     private String title, description, start, end, location, image;
     private String isHidden;
 
     public Plan() {
     }
 
-    public Plan(String documentID, String userid, String title, String description, String start, String end, String location, String image, String isHidden) {
+    public Plan(String documentID, String userid,String userName, String title, String description, String start, String end, String location, String image, String isHidden) {
         this.documentID = documentID;
         this.userID = userid;
+        this.userName = userName;
         this.title = title;
         this.description = description;
         this.start = start;
@@ -36,6 +37,14 @@ public class Plan {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public String getUserName(){
+        return userName;
+    }
+
+    public void setUserName(String userName){
+        this.userName = userName;
     }
 
     public String getTitle() {

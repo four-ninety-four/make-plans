@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,17 @@ public class FriendsFragment extends Fragment {
                 profilePhone.setText(user.getPhone());
                 profileEmail.setText(user.getEmail());
             }
+        });
+
+        addFriends.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View v){
+                Fragment fragment = new AddFriendFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.rellay1, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+
         });
 
         return v;

@@ -62,7 +62,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
         viewHolder.title.setText(plan.getTitle());
         viewHolder.shortDescription.setText(plan.getDescription());
         viewHolder.date.setText(fixDate(plan.getStart()) + " - \n" + fixDate(plan.getEnd()));
-        viewHolder.creatorType.setText(plan.getUserID() + " - ");
+        viewHolder.creatorType.setText(plan.getUserName() + " - ");
         if (plan.getIsHidden().equals("1"))
             viewHolder.creatorType.append("Friends Only");
         else

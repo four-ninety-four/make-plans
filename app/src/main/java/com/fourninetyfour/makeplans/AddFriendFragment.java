@@ -21,6 +21,7 @@ import java.util.List;
 
 public class AddFriendFragment extends Fragment {
 
+    private View v;
     View view;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;

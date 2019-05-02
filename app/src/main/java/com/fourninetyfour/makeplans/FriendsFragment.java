@@ -78,8 +78,8 @@ public class FriendsFragment extends Fragment {
                 ft.replace(R.id.fragment_container, fragment);
                 ft.addToBackStack(null);
                 ft.commit();
-            }
-        });
+             }
+       });
 
         return v;
     }

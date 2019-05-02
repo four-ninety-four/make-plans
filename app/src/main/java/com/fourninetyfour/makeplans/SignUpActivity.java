@@ -83,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
                     usersMap.put("email", email.toString());
                     usersMap.put("first", firstName.getText().toString());
                     usersMap.put("last", lastName.getText().toString());
-                    usersMap.put("image", "image.jpg");
+                    usersMap.put("image", "blank_profile.jpg");
                     usersMap.put("city", city.getText().toString());
                     usersMap.put("state", state.getText().toString());
                     usersMap.put("phone", phone.getText().toString());

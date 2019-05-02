@@ -3,24 +3,34 @@ package com.fourninetyfour.makeplans;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.*;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import org.w3c.dom.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,7 +38,7 @@ import java.util.*;
 import static android.app.Activity.RESULT_OK;
 
 public class AddPlanFragment extends Fragment {
-
+    private String userName;
     private Calendar startDate, endDate;
     private String savedLocation, savedStartDateTime, savedEndDateTime, savedDescription, savedTitle;
     private TextView startTime, endTime, title, description, location;
@@ -40,10 +50,12 @@ public class AddPlanFragment extends Fragment {
     private static int LOAD_IMAGE_RESULTS = 100;
     Uri imageURI;
     String savedImageURI;
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore database = FirebaseFirestore.getInstance();
-
+    FirebaseDatabase usersDB = FirebaseDatabase.getInstance();
     private final static SimpleDateFormat dateFormat
             = new SimpleDateFormat("mm-dd-yyyy, hh:mm", Locale.getDefault());
 
@@ -88,6 +100,18 @@ public class AddPlanFragment extends Fragment {
             }
         });
 
+        mStorageRef = FirebaseStorage.getInstance().getReference("images");
+
+        DocumentReference usersRef = database.collection("users").document(auth.getCurrentUser().getUid());
+        usersRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    userName = document.get("first").toString() +" " + document.get("last").toString();
+                }
+            }
+        });
 
         /* Upload to database and create event */
 
@@ -95,6 +119,7 @@ public class AddPlanFragment extends Fragment {
             public void onClick(View v) {
                 Map<String, String> planMap = new HashMap<>();
                 planMap.put("userID", auth.getCurrentUser().getUid());
+                planMap.put("userName", userName);
 
                 savedStartDateTime = startTime.getText().toString();
                 planMap.put("start", savedStartDateTime);
@@ -123,6 +148,7 @@ public class AddPlanFragment extends Fragment {
 
                 savedImageURI = imageURI.toString();
                 planMap.put("image", savedImageURI);
+                uploadFile();
 
                 if (savedImageURI == null || savedStartDateTime == "" || savedEndDateTime == "" ||
                 savedTitle == "" || savedDescription == "" || savedLocation == "") {
@@ -130,12 +156,16 @@ public class AddPlanFragment extends Fragment {
                     toast.show();
                 }
                 else {
-                    database.collection("plans").add(planMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getActivity(), "Plan added!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    DocumentReference docRef = database.collection("plans").document();
+                    planMap.put("documentID", docRef.getId());
+                    docRef.set(planMap);
+                    Toast.makeText(getActivity(), "Plan added!", Toast.LENGTH_SHORT).show();
+                    Fragment fragment = new PlansFragment();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
 
 
@@ -223,6 +253,21 @@ public class AddPlanFragment extends Fragment {
         endTime.setText(dateFormat.format(endDate.getTime()));
 
     }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cr = getContext().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+   private void uploadFile() {
+       if (savedImageURI != null) {
+           StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() +
+                   "." + getFileExtension(imageURI));
+
+           fileReference.putFile(imageURI);
+       }
+   }
 
 
 

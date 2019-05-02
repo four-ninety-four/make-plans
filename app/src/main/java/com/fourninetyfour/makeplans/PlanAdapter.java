@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.firebase.database.*;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -20,6 +22,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     private Context context;
     FirebaseFirestore database = FirebaseFirestore.getInstance();
     CollectionReference userRef = database.collection("plans");
+    DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference("plans");
 
 
     public PlanAdapter(List<Plan> plans, Context context) {
@@ -31,6 +34,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
 
         public TextView title, date, shortDescription, creatorType;
         public ImageView photo;
+        public ImageButton delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -40,6 +44,7 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
             shortDescription = (TextView) itemView.findViewById(R.id.textViewShortDesc);
             creatorType = (TextView) itemView.findViewById(R.id.textViewCreator_Type);
             photo = (ImageView) itemView.findViewById(R.id.imageView);
+            delete = (ImageButton) itemView.findViewById(R.id.deleteBtn);
         }
     }
     @NonNull
@@ -50,18 +55,34 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlanAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull PlanAdapter.ViewHolder viewHolder, final int i) {
         Plan plan = plans.get(i);
         //String uid = plan.getUserID();
         //plansRef.whereEqualTo("userID", uid).getE
         viewHolder.title.setText(plan.getTitle());
         viewHolder.shortDescription.setText(plan.getDescription());
         viewHolder.date.setText(fixDate(plan.getStart()) + " - \n" + fixDate(plan.getEnd()));
-        viewHolder.creatorType.setText(plan.getUserID() + " - ");
+        viewHolder.creatorType.setText(plan.getUserName() + " - ");
         if (plan.getIsHidden().equals("1"))
             viewHolder.creatorType.append("Friends Only");
         else
             viewHolder.creatorType.append("Public");
+
+        /* mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        }) */
+
+
         switch(plan.getImage()) {
             case "barbecue":
                 viewHolder.photo.setImageResource(R.drawable.barbecue);
@@ -70,6 +91,15 @@ RecyclerView.Adapter<PlanAdapter.ViewHolder> {
                 viewHolder.photo.setImageResource(R.drawable.birthday);
                 break;
         }
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Plan removedPlan = plans.get(i);
+                database.collection("plans").document(removedPlan.getDocumentID()).delete();
+                plans.remove(i);
+                notifyItemRemoved(i);
+            }
+        });
     }
 
     @Override

@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "697689948280-qp271preopla2bh2ng6o0de1kjbk63m9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fourninetyfour.makeplans",
+            "certificate_hash": "878c872e5d2006fe2d9629d7d567bb6f1beedad8"
+          }
+        },
+        {
           "client_id": "697689948280-tf3erf3375qc0t5o4uk1lvv9eilcj27e.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "697689948280-tf3erf3375qc0t5o4uk1lvv9eilcj27e.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

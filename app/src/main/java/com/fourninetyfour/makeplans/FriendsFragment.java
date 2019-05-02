@@ -9,45 +9,48 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class FriendsFragment extends Fragment {
-
-    View v;
-    Button add_friend;
-    Button view_friend;
-
+   View v;
+   private TextView profileName, profileTopLocation, profileLocation, profilePhone, profileEmail;
+   private ImageView profilePhoto;
+   private Button viewFriends, addFriends;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_friends, null);
-        setHasOptionsMenu(true);
+        profileName = v.findViewById(R.id.profile_fullname);
+        profileTopLocation = v.findViewById(R.id.profile_location_top);
+        profileLocation = v.findViewById(R.id.profile_location);
+        profilePhone = v.findViewById(R.id.profile_phone);
+        profileEmail = v.findViewById(R.id.profile_email);
+        profilePhoto = v.findViewById(R.id.profile_image);
+        viewFriends = v.findViewById(R.id.profile_view_friends);
+        addFriends = v.findViewById(R.id.profile_add_friends);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        add_friend = v.findViewById(R.id.profile_add_friends);
-        view_friend = v.findViewById(R.id.profile_view_friends);
+        CollectionReference userRef = database.collection("users");
+        //userRef.whereEqualTo("userID", uid).get()
 
-
-        add_friend.setOnClickListener(new View.OnClickListener() {
+        addFriends.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 Fragment fragment = new AddFriendFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.rellay1, fragment);
                 ft.addToBackStack(null);
                 ft.commit();
-        }
+            }
 
         });
-
-        view_friend.setOnClickListener((v) -> {
-           Fragment fragment = new ViewFriendFragment();
-        });
-
-        return inflater.inflate(R.layout.fragment_friends, null);
+        return v;
     }
 }

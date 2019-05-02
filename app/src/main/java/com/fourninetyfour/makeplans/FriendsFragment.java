@@ -1,6 +1,5 @@
 package com.fourninetyfour.makeplans;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,16 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.google.firebase.auth.FirebaseAuth;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FriendsFragment extends Fragment {
@@ -27,6 +25,9 @@ public class FriendsFragment extends Fragment {
    private TextView profileName, profileTopLocation, profileLocation, profilePhone, profileEmail;
    private ImageView profilePhoto;
    private Button viewFriends, addFriends;
+
+   private List<User> userList = new ArrayList<>();
+   private User user;
 
     @Nullable
     @Override
@@ -48,15 +49,14 @@ public class FriendsFragment extends Fragment {
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    profileName.setText(document.get("first").toString() + " " + document.get("last").toString());
-                    profileTopLocation.setText(document.get("state").toString() + ", USA");
-                    profileLocation.setText(document.get("city").toString() + ", " + document.get("state").toString());
-                    profileEmail.setText(document.get("email").toString());
-                    profilePhone.setText(document.get("phone").toString());
-                    //profilePhoto.setImageDrawable((Drawable) document.get("image"));
-                }
+                DocumentSnapshot doc = task.getResult();
+                user = doc.toObject(User.class);
+
+                profileName.setText(user.getFirst() + " " + user.getLast());
+                profileTopLocation.setText(user.getCity() + ", " + user.getState());
+                profileLocation.setText(user.getCity() + ", " + user.getState());
+                profilePhone.setText(user.getPhone());
+                profileEmail.setText(user.getEmail());
             }
         });
 
@@ -70,6 +70,7 @@ public class FriendsFragment extends Fragment {
             }
 
         });
+
         return v;
     }
 }

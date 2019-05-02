@@ -139,8 +139,8 @@ public class AddPlanFragment extends Fragment {
                 planMap.put("image", savedImageURI);
                 uploadFile();
 
-                if (savedImageURI == null || savedStartDateTime == "" || savedEndDateTime == "" ||
-                savedTitle == "" || savedDescription == "" || savedLocation == "") {
+                if (savedImageURI == null || savedStartDateTime.isEmpty() || savedEndDateTime.isEmpty() ||
+                savedTitle.isEmpty() || savedDescription.isEmpty() || savedLocation.isEmpty()) {
                     Toast toast = Toast.makeText(getContext(), "Missing field - Event cannot be created. Please make sure all fields are filled out.", Toast.LENGTH_LONG);
                     toast.show();
                 }
@@ -156,16 +156,12 @@ public class AddPlanFragment extends Fragment {
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
-
-
             }
         });
 
 
         return v;
     }
-
-
 
     public void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);

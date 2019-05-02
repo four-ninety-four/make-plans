@@ -95,14 +95,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void openFragment(final Fragment fragment)  {
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.MainFragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
     private boolean validateForm() {
         boolean valid = true;
 

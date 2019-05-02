@@ -1,6 +1,7 @@
 package com.fourninetyfour.makeplans;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,9 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FriendsFragment extends Fragment {
@@ -19,6 +24,9 @@ public class FriendsFragment extends Fragment {
    private TextView profileName, profileTopLocation, profileLocation, profilePhone, profileEmail;
    private ImageView profilePhoto;
    private Button viewFriends, addFriends;
+
+   private List<User> userList = new ArrayList<>();
+   private User user;
 
     @Nullable
     @Override
@@ -36,8 +44,21 @@ public class FriendsFragment extends Fragment {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        CollectionReference userRef = database.collection("users");
-        //userRef.whereEqualTo("userID", uid).get()
+        DocumentReference userRef = database.collection("users").document(uid);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot doc = task.getResult();
+                user = doc.toObject(User.class);
+
+                profileName.setText(user.getFirst() + " " + user.getLast());
+                profileTopLocation.setText(user.getCity() + ", " + user.getState());
+                profileLocation.setText(user.getCity() + ", " + user.getState());
+                profilePhone.setText(user.getPhone());
+                profileEmail.setText(user.getEmail());
+            }
+        });
+
         return v;
     }
 }

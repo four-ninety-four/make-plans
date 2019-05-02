@@ -14,8 +14,6 @@ import javax.annotation.Nullable;
 public class AddFriendFragment extends Fragment {
 
     private View v;
-    private TextView friend_email;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

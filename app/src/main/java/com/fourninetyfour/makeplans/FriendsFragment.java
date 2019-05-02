@@ -71,6 +71,16 @@ public class FriendsFragment extends Fragment {
 
         });
 
+        viewFriends.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View v) {
+                Fragment fragment = new ViewFriendFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+
         return v;
     }
 }

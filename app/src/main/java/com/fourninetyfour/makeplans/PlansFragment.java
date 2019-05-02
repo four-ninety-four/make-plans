@@ -9,9 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +64,13 @@ public class PlansFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        //RecyclerView plansList = getActivity().findViewById(R.id.plansRecyclerView);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        System.out.println(uid);
+
+       // database.collection()
 
         plans = new ArrayList<>();
         plans.add(new Plan(0, "John's Birthday", "John's 13th Birthday Party", "Wed, May 1 2019, 08:00 AM", "Wed, May 1 2019, 12:00 PM",

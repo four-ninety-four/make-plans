@@ -65,7 +65,8 @@ class Friend {
         return friendImage;
     }
 
-    public String setFriendImage(String friendImage) {
+    public void setFriendImage(String friendImage) {
         this.friendImage = friendImage;
     }
 }
+

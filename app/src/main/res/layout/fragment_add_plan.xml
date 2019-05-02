@@ -56,7 +56,6 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:hint="Title"
-                                android:textColor="#252525"
                                 android:paddingStart="6dp"
                                 android:paddingEnd="6dp"
                                 style="@style/createEventItemTextView" />
@@ -98,7 +97,6 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:hint="Description"
-                            android:textColor="#252525"
                             android:paddingStart="6dp"
                             android:paddingEnd="6dp"
                             style="@style/createEventItemTextView" />
@@ -141,20 +139,17 @@
                                 android:layout_width="82dp"
                                 android:layout_weight="1"
                                 android:text="Start"
-                                android:textColor="#252525"
                                 android:paddingStart="6dp"
                                 android:paddingEnd="6dp"
-                                style="@style/createEventItemTextView" android:layout_height="match_parent"/>
+                                android:layout_height="match_parent"/>
 
                     <TextView
                             android:id="@+id/start_date"
-                            style="@style/createEventItemTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:layout_margin="0dp"
                             android:background="?selectableItemBackground"
-                            android:textColor="#252525"
                             android:gravity="end"
                             android:paddingTop="6.5dp"
                             android:paddingBottom="6.5dp"
@@ -194,20 +189,16 @@
                                 android:layout_width="82dp"
                                 android:layout_weight="1"
                                 android:text="End"
-                                android:textColor="#252525"
                                 android:paddingStart="6dp"
                                 android:paddingEnd="6dp"
-                                style="@style/createEventItemTextView" android:layout_height="match_parent"/>
+                                android:layout_height="match_parent"/>
 
                         <TextView
                                 android:id="@+id/end_date"
-                                style="@style/createEventItemTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:layout_margin="0dp"
-                                android:background="?selectableItemBackground"
-                                android:textColor="#252525"
                                 android:gravity="end"
                                 android:paddingTop="6.5dp"
                                 android:paddingBottom="6.5dp"
@@ -252,7 +243,6 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:hint="Location"
-                        android:textColor="#252525"
                         android:paddingStart="6dp"
                         android:paddingEnd="6dp"
                         style="@style/createEventItemTextView" />
@@ -294,7 +284,6 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="match_parent"
-                                android:textColor="#252525"
                                 android:paddingStart="6dp"
                                 android:paddingEnd="6dp"
                                 />

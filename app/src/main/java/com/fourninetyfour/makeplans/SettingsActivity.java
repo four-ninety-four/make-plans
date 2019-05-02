@@ -35,12 +35,20 @@ public class SettingsActivity extends Fragment {
     @Override
     public void onDestroyView() {
         SharedPreferences prefs = this.getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        boolean changed = false;
+        if (theme.isChecked() != prefs.getBoolean("darkMode", false))
+            changed = true;
+
         if (theme.isChecked())
             prefs.edit().putBoolean("darkMode",true).apply();
         else
             prefs.edit().putBoolean("darkMode",false).apply();
-        this.getActivity().finish();
-        startActivity(this.getActivity().getIntent());
+
+        if(changed){
+            this.getActivity().finish();
+            startActivity(this.getActivity().getIntent());
+        }
+
         super.onDestroyView();
 
     }

@@ -1,5 +1,6 @@
 package com.fourninetyfour.makeplans;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -171,11 +172,12 @@ public class AddPlanFragment extends Fragment {
     public void showDateTimePickerStart() {
         final Calendar currentDate = Calendar.getInstance();
         startDate = Calendar.getInstance();
-        new DatePickerDialog(this.getContext(), new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(this.getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
                 startDate.set(year, monthOfYear, dayOfMonth);
-                new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(getContext(),  R.style.Theme_AppCompat_DayNight_Dialog_Alert, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         startDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -198,11 +200,11 @@ public class AddPlanFragment extends Fragment {
     public void showDateTimePickerEnd() {
         final Calendar currentDate = Calendar.getInstance();
         endDate = Calendar.getInstance();
-        new DatePickerDialog(this.getContext(), new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(this.getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 endDate.set(year, monthOfYear, dayOfMonth);
-                new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         endDate.set(Calendar.HOUR_OF_DAY, hourOfDay);

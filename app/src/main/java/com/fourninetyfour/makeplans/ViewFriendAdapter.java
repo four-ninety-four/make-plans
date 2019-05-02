@@ -59,10 +59,10 @@ public class ViewFriendAdapter extends RecyclerView.Adapter<ViewFriendAdapter.Vi
         Friend friend = friends.get(i);
         //String uid = plan.getUserID();
         //plansRef.whereEqualTo("userID", uid).getE
-        viewHolder.name.setText(friend.getFriendFirstName() + " " + friend.getFriendLastName());
-        viewHolder.email.setText(friend.getFriendEmail());
-        viewHolder.state.setText(friend.getFriendState());
-        viewHolder.city.setText(friend.getfriendCity());
+        viewHolder.name.setText(friend.getFirst() + " " + friend.getLast());
+        viewHolder.email.setText(friend.getEmail());
+        viewHolder.state.setText(friend.getState());
+        viewHolder.city.setText(friend.getCity());
         viewHolder.photo.setImageResource(R.drawable.ic_user);
 
         /*viewHolder.delete.setOnClickListener(new View.OnClickListener() {
